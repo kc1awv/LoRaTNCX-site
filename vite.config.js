@@ -11,6 +11,9 @@ export default ({ mode }) => {
 
   return defineConfig({
     base: process.env.VITE_BASE_PUBLIC_PATH,
+    server: {
+      historyApiFallback: true,
+    },
     plugins: [
       eslint({ cache: false }),
       stylelint(),
