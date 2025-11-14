@@ -35,9 +35,9 @@ jobs:
         run: pnpm install
 
       - name: Build
-        env:
-          VITE_BASE_PUBLIC_PATH: ${{ secrets.VITE_BASE_PUBLIC_PATH }}
         run: pnpm run build
+        env:
+          VITE_BASE_PUBLIC_PATH: /LoRaTNCX-site/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
