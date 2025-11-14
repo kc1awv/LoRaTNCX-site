@@ -1,25 +1,25 @@
 {
   "name": "LoRaTNCX Heltec V3",
-  "version": "v0.1.2",
+  "version": "v0.1.3",
   "new_install_prompt_erase": true,
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "/firmware/v0.1.2/bootloader_V3.bin",
+          "path": "/firmware/v0.1.3/bootloader_V3.bin",
           "offset": 0
         },
         {
-          "path": "/firmware/v0.1.2/partitions_V3.bin",
+          "path": "/firmware/v0.1.3/partitions_V3.bin",
           "offset": 32768
         },
         {
-          "path": "/firmware/v0.1.2/firmware_V3.bin",
+          "path": "/firmware/v0.1.3/firmware_V3.bin",
           "offset": 65536
         },
         {
-          "path": "/firmware/v0.1.2/spiffs_V3.bin",
+          "path": "/firmware/v0.1.3/spiffs_V3.bin",
           "offset": 6750208
         }
       ]

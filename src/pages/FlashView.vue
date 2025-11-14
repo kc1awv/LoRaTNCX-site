@@ -65,14 +65,12 @@ const manifestV4 = '/firmware/heltec_v4.manifest.json';
         What gets flashed?
       </h3>
       <ul class="list-disc space-y-1 pl-5">
+        <li>Bootloader to <code>bootloader</code> at <code>0x0</code>.</li>
+        <li>Partition table to <code>partitions</code> at <code>0x8000</code>.</li>
         <li>Main firmware image to <code>app0</code> at <code>0x10000</code>.</li>
         <li>
           SPIFFS filesystem image to the <code>spiffs</code> partition (offset depends on
           board).
-        </li>
-        <li>
-          Bootloader and partition table are left alone, so you can recover with esptool
-          if you really hose things.
         </li>
       </ul>
     </section>
