@@ -1,0 +1,15 @@
+{
+  "name": "LoRaTNCX Heltec V3",
+  "version": "v0.1.1",
+  "chipFamily": "ESP32-S3",
+  "parts": [
+    {
+      "path": "https://github.com/kc1awv/LoRaTNCX/releases/download/v0.1.1/firmware_V3.bin",
+      "offset": 65536
+    },
+    {
+      "path": "https://github.com/kc1awv/LoRaTNCX/releases/download/v0.1.1/spiffs_V3.bin",
+      "offset": 6750208
+    }
+  ]
+}
