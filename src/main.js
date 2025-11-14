@@ -15,4 +15,13 @@ const router = createRouter({
 const app = createApp(App);
 
 app.use(router);
+
+// Handle GitHub Pages SPA redirect
+const query = window.location.search;
+if (query && query.startsWith('?/')) {
+  const path = query.slice(2).split('&')[0];
+  router.push(path);
+  window.history.replaceState(null, '', path);
+}
+
 app.mount('#app');
