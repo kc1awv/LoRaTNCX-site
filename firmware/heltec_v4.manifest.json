@@ -7,19 +7,19 @@
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "/firmware/v0.1.1/bootloader_V4.bin",
+          "path": "/firmware/v0.1.2/bootloader_V4.bin",
           "offset": 0
         },
         {
-          "path": "/firmware/v0.1.1/partitions_V4.bin",
+          "path": "/firmware/v0.1.2/partitions_V4.bin",
           "offset": 32768
         },
         {
-          "path": "/firmware/v0.1.1/firmware_V4.bin",
+          "path": "/firmware/v0.1.2/firmware_V4.bin",
           "offset": 65536
         },
         {
-          "path": "/firmware/v0.1.1/spiffs_V4.bin",
+          "path": "/firmware/v0.1.2/spiffs_V4.bin",
           "offset": 13172736
         }
       ]
