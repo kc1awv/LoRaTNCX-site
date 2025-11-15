@@ -10,7 +10,7 @@ LoRaTNCX includes a comprehensive web-based control center that provides full co
 
 **Access Point Mode (Default):**
 - **URL:** `http://192.168.4.1`
-- **Network:** `LoRaTNCX-XXXX` (where XXXX is last 4 hex digits of MAC address)
+- **Network:** `LoRaTNCX-XXXXXXXXXXXX` (where XXXXXXXXXXXX is MAC address)
 - **Password:** `loratncx`
 
 **Station Mode:**
@@ -19,7 +19,7 @@ LoRaTNCX includes a comprehensive web-based control center that provides full co
 - **Example:** `http://192.168.1.100`
 
 **mDNS Discovery:**
-- **URL:** `http://loratncx-xxxx.local` (where xxxx is MAC address suffix)
+- **URL:** `http://loratncx.local` (where xxxx is MAC address suffix)
 - **Works on:** Networks that support mDNS (Bonjour)
 
 ### Browser Compatibility
@@ -34,7 +34,7 @@ The web interface works with all modern browsers:
 ### First-Time Setup
 
 1. **Power on** the LoRaTNCX device
-2. **Connect** to the `LoRaTNCX-XXXX` WiFi network
+2. **Connect** to the `LoRaTNCX-XXXXXXXXXXXX` WiFi network
 3. **Open browser** and navigate to `http://192.168.4.1`
 4. **Configure** WiFi settings for your network (optional)
 5. **Begin using** the device

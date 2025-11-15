@@ -9,7 +9,7 @@ LoRaTNCX is an AI-assisted implementation of a KISS (Keep It Simple, Stupid) Ter
 - Full KISS protocol implementation with LoRa extensions
 - Web-based configuration interface
 - WiFi connectivity (AP, STA, or dual mode)
-- GNSS support for location tracking
+- GNSS support for location tracking 
 - TCP KISS server for network access
 - OLED status display
 - Battery voltage monitoring

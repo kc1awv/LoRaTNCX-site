@@ -11,7 +11,7 @@ LoRaTNCX provides comprehensive GNSS (Global Navigation Satellite System) suppor
 ### Supported Boards
 
 **Heltec WiFi LoRa 32 V4:**
-- Built-in GNSS module (u-blox or compatible)
+- Optional GNSS module
 - Dedicated GNSS pins with power control
 - Integrated GNSS antenna
 - Default configuration available

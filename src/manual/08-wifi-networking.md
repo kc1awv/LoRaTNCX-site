@@ -37,7 +37,7 @@ LoRaTNCX supports four WiFi operating modes, allowing flexible network integrati
 When LoRaTNCX starts for the first time or after a factory reset:
 
 - **Mode:** Access Point (AP) only
-- **AP SSID:** `LoRaTNCX-XXXX` (where XXXX is last 4 hex digits of MAC address)
+- **AP SSID:** `LoRaTNCX-XXXXXXXXXXXX` (where XXXXXXXXXXXX is MAC address)
 - **AP Password:** `loratncx`
 - **AP IP Address:** `192.168.4.1`
 - **TCP KISS Server:** Enabled on port 8001
@@ -48,7 +48,7 @@ When LoRaTNCX starts for the first time or after a factory reset:
 ### Setting Up Access Point Mode
 
 **Via Web Interface:**
-1. Connect to `LoRaTNCX-XXXX` network with password `loratncx`
+1. Connect to `LoRaTNCX-XXXXXXXXXXXX` network with password `loratncx`
 2. Open browser to `http://192.168.4.1`
 3. Navigate to WiFi Configuration page
 4. Set Mode to "Access Point"

@@ -82,7 +82,6 @@ LoRaTNCX/
 │   ├── kiss.cpp
 │   └── ...
 ├── include/                # Header files
-├── lib/                    # Local libraries (if any)
 ├── data/                   # SPIFFS web interface files
 ├── test/                   # Test files
 ├── boards/                 # Custom board definitions
@@ -308,15 +307,13 @@ pio run --target uploadfs --environment heltec_wifi_lora_32_V4
 The `data/` directory contains:
 ```
 data/
-├── index.html          # Main web interface
-├── style.css           # Styling
-├── app.js             # JavaScript functionality
-├── popper.min.js      # UI library
-├── tippy-bundle.umd.js # Tooltip library
-├── tippy-light-theme.css # Tooltip styling
-└── webfonts/          # Font Awesome icons
-    ├── fa-solid-900.woff2
-    └── ...
+├── index.html        # Main web interface
+├── app.js.gz         # JavaScript functionality
+└── a/
+    ├── css
+    |   └── bs.css.gz # Bootstrap 5 CSS
+    └── js
+        └── bs.js.gz  # Bootstrap 5 JS
 ```
 
 ### SPIFFS Operations

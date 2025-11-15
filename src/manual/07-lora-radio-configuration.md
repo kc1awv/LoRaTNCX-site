@@ -25,21 +25,34 @@ The operating frequency determines which radio band your device uses. This is th
 
 **Important:** Always verify local regulations before selecting frequencies. Some bands require licenses.
 
-### Bandwidth (125/250/500 kHz)
+### Bandwidth
 
 Bandwidth affects data rate and receiver sensitivity. Wider bandwidth provides higher data rates but requires stronger signals.
 
 **Default:** 125 kHz
 
 **Available Options:**
+
+***Narrow bandwidths:***
+- **7.8 kHz:** Very high sensitivity, very slow data rate (not commonly used)
+- **10.4 kHz:** High sensitivity, slow data rate
+- **15.6 kHz:** Moderate sensitivity and data rate
+- **20.8 kHz:** Balanced sensitivity and speed
+
+***Medium bandwidths:***
+- **31.25 kHz:** Faster data rate, lower sensitivity
+- **41.7 kHz:** Even faster data rate, reduced sensitivity
+- **62.5 kHz:** High data rate, lower sensitivity
+
+***Wide bandwidths:***
 - **125 kHz:** Best sensitivity, longest range, slower data rate
 - **250 kHz:** Medium sensitivity and data rate
 - **500 kHz:** Fastest data rate, shortest range
 
 **Configuration Methods:**
 - **Command Line:** `loratncx_config.py --bandwidth 125`
-- **Web Interface:** Bandwidth dropdown (125/250/500 kHz)
-- **KISS Protocol:** `SETHARDWARE 0x02 <index>` (0=125kHz, 1=250kHz, 2=500kHz)
+- **Web Interface:** Bandwidth dropdown
+- **KISS Protocol:** `SETHARDWARE 0x02 <float>` (4-byte float, kHz)
 
 **Trade-offs:**
 - Narrower bandwidth = longer range, slower speed
@@ -55,7 +68,7 @@ Spreading factor determines how much the signal is "spread" across time and freq
 
 **Configuration Methods:**
 - **Command Line:** `loratncx_config.py --spreading-factor 12`
-- **Web Interface:** Spreading Factor dropdown (7-12)
+- **Web Interface:** Spreading Factor dropdown
 - **KISS Protocol:** `SETHARDWARE 0x03 <value>` (7-12)
 
 **Trade-offs:**
@@ -80,7 +93,7 @@ Coding rate adds error correction to the data. Higher coding rates provide bette
 
 **Configuration Methods:**
 - **Command Line:** `loratncx_config.py --coding-rate 7`
-- **Web Interface:** Coding Rate dropdown (5-8)
+- **Web Interface:** Coding Rate dropdown
 - **KISS Protocol:** `SETHARDWARE 0x04 <value>` (5-8)
 
 **Trade-offs:**
@@ -93,11 +106,11 @@ Output power controls transmission strength. Higher power increases range but co
 
 **Default:** 20 dBm (100 mW)
 
-**Available Range:** 2-20 dBm (V3 board), 2-22 dBm (V4 board with PA control)
+**Available Range:** 2-22 dBm (V3 board), 2-28 dBm (V4 board with PA control)
 
 **Configuration Methods:**
 - **Command Line:** `loratncx_config.py --power 20`
-- **Web Interface:** Power slider (2-20/22 dBm)
+- **Web Interface:** Power field (2-22/28 dBm)
 - **KISS Protocol:** `SETHARDWARE 0x05 <value>` (dBm value)
 
 **Power Considerations:**
@@ -117,8 +130,8 @@ Sync word allows multiple networks to coexist on the same frequency. Only device
 - **KISS Protocol:** `SETHARDWARE 0x08 <sync_bytes>` (2 bytes, big-endian)
 
 **Recommended Values:**
-- **0x1424:** Private network (recommended, compatible with SX127x 0x12)
-- **0x3444:** Public/LoRaWAN network (compatible with SX127x 0x34)
+- **0x1424:** Private network (recommended)
+- **0x3444:** Public/LoRaWAN network
 
 **Important:** All devices in your network must use the same sync word.
 
@@ -128,7 +141,7 @@ Sync word allows multiple networks to coexist on the same frequency. Only device
 
 The deaf period prevents the radio from receiving immediately after transmitting, avoiding hearing its own echo when radios are close together.
 
-**Default:** 2000 ms
+**Default:** 0 ms
 
 **Configuration Methods:**
 - **Command Line:** `loratncx_config.py --deaf-period 2000`
@@ -149,7 +162,7 @@ Spreading Factor: 12
 Coding Rate: 7
 Power: 20 dBm
 ```
-**Use Case:** Maximum range, weather stations, remote monitoring
+**Use Case:** Maximum range, low data rate applications
 
 ### Medium Range, Balanced
 ```

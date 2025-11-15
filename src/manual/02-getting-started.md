@@ -28,9 +28,7 @@ LoRaTNCX supports two board variants:
 **Heltec WiFi LoRa 32 V3:**
 - ESP32-S3 microcontroller
 - SX1262 LoRa radio
-- No external power amplifier
 - OLED display
-- No GNSS connector
 
 **Heltec WiFi LoRa 32 V4:**
 - ESP32-S3 microcontroller
@@ -118,7 +116,7 @@ platformio run --target uploadfs --environment heltec_wifi_lora_32_V4
 After uploading firmware, the TNC will:
 
 1. **Boot up** and show startup messages on the OLED display
-2. **Create a WiFi Access Point** named `LoRaTNCX-XXXX` (where XXXX is a unique ID)
+2. **Create a WiFi Access Point** named `LoRaTNCX-XXXXXXXXXXXX` (where XXXXXXXXXXXX is a unique ID)
 3. **Set default LoRa parameters**:
    - Frequency: 915.0 MHz
    - Bandwidth: 125 kHz
@@ -129,7 +127,7 @@ After uploading firmware, the TNC will:
 
 ### Connecting to the Web Interface
 
-1. **Find the WiFi Network**: Look for `LoRaTNCX-XXXX` in your WiFi networks
+1. **Find the WiFi Network**: Look for `LoRaTNCX-XXXXXXXXXXXX` in your WiFi networks
 2. **Connect**: Password is `loratncx`
 3. **Open Browser**: Navigate to `http://192.168.4.1`
 4. **Change Default Password**: Immediately change the WiFi password for security
@@ -137,11 +135,13 @@ After uploading firmware, the TNC will:
 ### OLED Display Status
 
 The OLED display shows:
-- LoRaTNCX startup screen
+- LoRaTNCX splash screen
+- Device boot process
+- Device basic status
 - Radio configuration summary
 - Current WiFi mode and status
-- Battery voltage (if connected)
 - GNSS status (if applicable)
+- Battery voltage (if connected)
 - Blank screen (OLED power off mode)
 
 ### Serial Monitor

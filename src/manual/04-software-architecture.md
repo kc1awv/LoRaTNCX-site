@@ -45,6 +45,7 @@ Command **0x06** with subcommands for LoRa configuration:
 | 0x06       | -             | Get current configuration          |
 | 0x07       | -             | Save to NVS flash                  |
 | 0x08       | 2-byte        | Set sync word                      |
+| 0x09       | 1-byte        | Enable/disable GNSS                |
 | 0xFF       | -             | Factory reset                      |
 
 ### LoRa Extensions (GETHARDWARE)
@@ -55,6 +56,7 @@ Command **0x07** for querying hardware status:
 | 0x01       | Radio config | Frequency, BW, SF, CR, power, sync |
 | 0x02       | 4-byte float | Battery voltage                    |
 | 0x03       | String       | Board type and name                |
+| 0x04       | GNSS Status  | GNSS enable, fix, sats, location   |
 | 0xFF       | All data     | Complete status dump               |
 
 ## 4.2. SETHARDWARE and GETHARDWARE Commands
@@ -89,6 +91,7 @@ uint8_t query[] = {0xC0, 0x07, 0x02, 0xC0};
 - **Coding Rate**: 5-8 (4/5 through 4/8, higher = better error correction)
 - **TX Power**: 2-20 dBm (V3 limited by internal PA, V4 can use full range)
 - **Sync Word**: 2-byte value (0x1424 default for public networks)
+- **GNSS Enable**: 1-byte value (1 on, 0 off)
 
 ## 4.3. Interrupt-Driven Reception
 
@@ -150,33 +153,74 @@ void OnRxError(void) {
 Configuration persists across power cycles using ESP32 Non-Volatile Storage:
 
 ```cpp
-// Configuration structure
+// Configuration structure for LoRa parameters
 struct LoRaConfig {
-    float frequency;
-    float bandwidth;
-    uint8_t spreadingFactor;
-    uint8_t codingRate;
-    int8_t txPower;
-    uint16_t syncWord;
-    // ... other settings
+    float frequency;        // MHz
+    float bandwidth;        // kHz
+    uint8_t spreading;      // SF 7-12
+    uint8_t codingRate;     // 5-8 (for 4/5 to 4/8)
+    int8_t power;           // dBm
+    uint16_t syncWord;      // Sync word (2 bytes for SX126x)
+    uint8_t preamble;       // Preamble length
+    uint32_t magic;         // Magic number to verify valid config
 };
 
 // Save configuration
-void saveConfig() {
-    preferences.begin("lora", false);
-    preferences.putFloat("freq", config.frequency);
-    preferences.putFloat("bw", config.bandwidth);
-    // ... save other parameters
+bool ConfigManager::saveConfig(const LoRaConfig& config) {
+    if (!preferences.begin(NVS_NAMESPACE, false)) {
+        return false;
+    }
+    
+    // Create a copy with magic number
+    LoRaConfig configToSave = config;
+    configToSave.magic = CONFIG_MAGIC;
+    
+    // Write configuration as a blob
+    size_t written = preferences.putBytes(NVS_CONFIG_KEY, &configToSave, sizeof(LoRaConfig));
     preferences.end();
+    
+    if (written != sizeof(LoRaConfig)) {
+        return false;
+    }
+    
+    return true;
 }
 
 // Load configuration
-void loadConfig() {
-    preferences.begin("lora", true);
-    config.frequency = preferences.getFloat("freq", 915.0);
-    config.bandwidth = preferences.getFloat("bw", 125.0);
-    // ... load other parameters
+bool ConfigManager::loadConfig(LoRaConfig& config) {
+    if (!preferences.begin(NVS_NAMESPACE, false)) {
+        return false;
+    }
+    
+    // Check if config key exists
+    if (!preferences.isKey(NVS_CONFIG_KEY)) {
+        preferences.end();
+        return false;
+    }
+    
+    size_t len = preferences.getBytes(NVS_CONFIG_KEY, &config, sizeof(LoRaConfig));
     preferences.end();
+    
+    // Check if we read the correct size
+    if (len != sizeof(LoRaConfig)) {
+        return false;
+    }
+    
+    // Validate magic number
+    if (config.magic != CONFIG_MAGIC) {
+        return false;
+    }
+    
+    // Validate ranges
+    if (config.frequency < 137.0 || config.frequency > 1020.0 ||
+        config.bandwidth < 7.8 || config.bandwidth > 500.0 ||
+        config.spreading < 6 || config.spreading > 12 ||
+        config.codingRate < 5 || config.codingRate > 8 ||
+        config.power < -9 || config.power > 22) {
+        return false;
+    }
+    
+    return true;
 }
 ```
 

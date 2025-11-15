@@ -5,17 +5,17 @@ This section provides detailed information about the supported hardware platform
 ## 3.1. Heltec WiFi LoRa 32 V3 Board
 
 ### Overview
-The Heltec WiFi LoRa 32 V3 is the original board in the series, featuring an ESP32-S3 microcontroller and SX1262 LoRa radio module.
+The Heltec WiFi LoRa 32 V3 features an ESP32-S3 microcontroller and SX1262 LoRa radio module.
 
 ### Key Specifications
 - **Microcontroller**: ESP32-S3 (dual-core, WiFi, Bluetooth)
 - **LoRa Radio**: SX1262 (direct control, no external PA)
 - **Display**: 0.96" OLED (128x64 SSD1306)
 - **Memory**: 8MB flash, 512KB RAM
-- **Power**: 3.3V-5V input via USB-C
-- **Frequency Range**: 433-928 MHz ISM bands
-- **Antenna**: SMA connector
-- **GNSS**: Not supported (no dedicated connector)
+- **Power**: 5V input via USB-C
+- **Frequency Range**: 433-928 MHz ISM bands (dependent on version bought)
+- **Antenna**: U.FL/IPEX connector
+- **GNSS**: Custom support (attach your own, no dedicated connector)
 
 ### Pin Configuration
 ```
@@ -54,9 +54,9 @@ The Heltec WiFi LoRa 32 V4 is the enhanced version with external power amplifica
 - **Microcontroller**: ESP32-S3 (dual-core, WiFi, Bluetooth)
 - **LoRa Radio**: SX1262 with external PA
 - **Display**: 0.96" OLED (128x64 SSD1306)
-- **Memory**: 8MB flash, 512KB RAM
-- **Power**: 3.3V-5V input via USB-C
-- **Frequency Range**: 433-928 MHz ISM bands
+- **Memory**: 16MB flash, 512KB RAM
+- **Power**: 5V input via USB-C
+- **Frequency Range**: 433-928 MHz ISM bands (dependent on version bought)
 - **Antenna**: SMA connector
 - **GNSS**: Dedicated connector for Heltec GNSS module
 
@@ -122,23 +122,23 @@ The firmware automatically detects board type at compile time using build flags:
 - `-DARDUINO_HELTEC_WIFI_LORA_32_V3` for V3 boards
 - `-DARDUINO_HELTEC_WIFI_LORA_32_V4` for V4 boards
 
-This ensures correct PA control initialization for each hardware variant.
+This ensures correct radio and PA control initialization for each hardware variant.
 
 ## 3.4. Antenna Connections
 
 ### SMA Connector
-Both V3 and V4 boards feature SMA female antenna connectors for secure, professional antenna connections.
+Both V3 and V4 boards feature U.FL antenna connectors for secure, professional antenna connections.
 
 ### Supported Antennas
 - **Frequency Range**: Must match your operating frequency (433, 868, 915, 928 MHz)
 - **Impedance**: 50Ω
-- **Connector Type**: SMA male
+- **Connector Type**: U.FL
 - **Gain**: 2-5 dBi recommended for most applications
 
 ### Antenna Requirements
 - **LoRa Operation**: Quarter-wave or half-wave antennas optimized for your frequency
 - **VSWR**: < 2.0:1 recommended for best performance
-- **Power Handling**: Must handle transmit power (up to 20dBm/100mW)
+- **Power Handling**: Must handle transmit power (28dBm/~600mW)
 
 ⚠️ **Important**: Never transmit without a proper antenna connected. This can damage the radio module and violate FCC regulations.
 
@@ -155,12 +155,14 @@ The V4 board includes a dedicated 6-pin GNSS connector for the Heltec GNSS modul
 ### Pin Assignment
 ```
 GNSS Connector (J1):
-Pin 1: VGNSS (3.3V power)
-Pin 2: GND
-Pin 3: GNSS_TX (module TX -> ESP32 RX)
-Pin 4: GNSS_RX (ESP32 TX -> module RX)
-Pin 5: PPS (Pulse Per Second output)
-Pin 6: WAKE (wake-up signal)
+Pin 1: RST_GPS (Reset)
+Pin 2: PPS (Pulse Per Second output)
+Pin 3: WAKE_UP (Wake-up signal)
+Pin 4: RX_GPS (ESP32 TX -> module RX)
+Pin 5: TX_GPS (module TX -> ESP32 RX)
+Pin 6: VDD_3V3 (3.3V Power)
+Pin 7: VGNSS_Ctrl (Power control)
+Pin 8: GND
 ```
 
 ### Supported Module
@@ -205,16 +207,19 @@ Pin 6: WAKE (wake-up signal)
 ### Display Content
 The OLED display shows real-time status information:
 
-1. **Boot Screen** (2 seconds):
+1. **Splash Screen** (3 seconds):
    - LoRaTNCX logo
-   - Firmware version
-   - Board type (V3/V4)
 
-2. **Status Screen** (rotating display):
+2. **Boot Screen**
+   - Firmware version
+   - Boot process
+
+3. **Status Screen** (rotating display):
+   - TNC Basic Status
    - Current LoRa frequency and parameters
    - WiFi connection status
-   - Battery voltage
    - GNSS status (if applicable)
+   - Battery voltage
    - Blank screen to save power
 
 ### Power Management
@@ -224,7 +229,6 @@ The OLED display shows real-time status information:
 
 ### Configuration
 - **Rotation**: Automatic cycling through different views
-- **Timeout**: Configurable display timeout
 - **Brightness**: Fixed (OLED technology)
 - **Orientation**: Landscape (128x64)
 
