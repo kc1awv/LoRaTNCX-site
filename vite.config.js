@@ -4,6 +4,7 @@ import eslint from 'vite-plugin-eslint';
 import stylelint from 'vite-plugin-stylelint';
 import svgLoader from 'vite-svg-loader';
 import autoImport from 'unplugin-auto-import/dist/vite.js';
+import Markdown from 'vite-plugin-md'
 import { resolve } from 'path';
 
 export default ({ mode }) => {
@@ -19,11 +20,16 @@ export default ({ mode }) => {
       stylelint(),
       svgLoader(),
       vue({
+        include: [/\.vue$/, /\.md$/],
         template: {
           compilerOptions: {
             isCustomElement: (tag) => tag === 'esp-web-install-button',
           },
         },
+      }),
+      Markdown({
+        wrapperClasses: 'markdown-body',
+        // You can add more options later (markdown-it plugins, syntax highlighting, etc.)
       }),
       autoImport({
         imports: [
